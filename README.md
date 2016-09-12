@@ -1,8 +1,35 @@
 # OWTeamBuilder
 
-Directory Structure
+Overall Plan for This App
 
-Based upon the Todo Example Application
+The current plan for this app is to allow players to track their record in
+based upon maps in addition to what is already available on the stats
+provided by playoverwatch.com. The user builds his team to mimic the players
+from there can enter the teams comp level the opponents and what map they
+are playing on. Before the map starts they hit start and then their data
+is pulled from the site and saved. The number of games is logged, and after the game is logged
+the user selects save game and then the stats are pulled from online and populated
+then saved in an analytics folder. The user can view all of his stats with maps
+and a record of games.
+
+Sadly the stats do not update after the game so this won't work as well.
+
+Need to check if they update by games or by different sessions.
+
+First I need to make the team builder which takes in those diff inputs then tells
+other players to verify their team comp. But for now don't break it down into
+accounts and just do one large one.
+
+Team suggestions ultimately based upon win percentages
+
+Recommended heroes as well
+
+Version 1
+-Ability to log matches in order to find win rate
+-View the matches, send matches to players (could verify accounts if needed be)
+
+
+Directory Structure
 
 imports/
   startup/

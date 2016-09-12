@@ -21,7 +21,14 @@ import PlayerTable from './PlayerTable.jsx'
       {_id: 1, playerName: 'Camlani#1682'},
       {_id: 2, playerName: 'Enygmatic#11873'},
       {_id: 3, playerName: 'jaydotjaypeg#1304'},
-      {_id: 4, playerName: 'Drew#1487'}
+      {_id: 4, playerName: 'Drew#1487'},
+      {_id: 5, playerName: 'tcwontonsoup#1868'},
+      {_id: 7, playerName: 'TaylorMade#12821'},
+      {_id: 8, playerName: 'WillPurdue#1314'},
+      {_id: 9, playerName: ''},
+
+
+
     ]
     return playerArray;
   }
@@ -37,7 +44,7 @@ import PlayerTable from './PlayerTable.jsx'
     console.log(this.state.currPlayer);
     //now need to pass this to my Meteor Method
     //As well as start generating a value for all
-    Meteor.call('requestPlayerStatistics', this.state.currPlayer, (error, response) => {
+    Meteor.call('requestPlayerStatistics', this.state.currPlayer , (error, response) => {
       if(error){
         console.log(error);
       }

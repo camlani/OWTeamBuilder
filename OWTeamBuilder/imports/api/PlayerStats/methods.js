@@ -3,6 +3,11 @@ import { check } from 'meteor/check';
 import { Mongo } from 'meteor/mongo';
 import { HTTP } from 'meteor/http';
 
+export const Stats = new Mongo.Collection('playerStats')
+
+
+
+
 Meteor.methods({
      //test
    requestPlayerStatistics(playerName, platform, region, mode){
@@ -18,18 +23,33 @@ Meteor.methods({
       //they are in
       //maybe store in the db too, all this data maybe too much
 
+      //This API is currently not working
       //https://api.lootbox.eu/patch_notes
       //https://api.lootbox.eu/pc/us/Camlani-1682/quick-play/hero/Torbjoern%2CLucio%2CSoldier76/
 
-      let buildUrl ="https://api.lootbox.eu/pc/us/";
+      //This is the API we will be using
+      //https://github.com/SunDwarf/OWAPI/blob/master/api.md
+
+      //Request for single player stats
+      //https://owapi.net/api/v2/u/SunDwarf-21353/heroes/reinhardt/competitive
 
 
-      HTTP.get('', {}, function(error, response){
+      let buildUrl ="https://owapi.net/api/v2/u/"+playerName+"/stats/general?region=us";
+      //let buildUrl ="https://owapi.net/api/v2/u/"+playerName+"/heroes/reinhardt/competitive?region=us";
+
+      console.log(buildUrl);
+
+
+      HTTP.get(buildUrl, {}, function(error, response){
         if (error){
           console.log(error);
         }
         if (response) {
           console.log(response);
+          Stats.insert({
+            result: response
+          });
+
         }
       });
 
