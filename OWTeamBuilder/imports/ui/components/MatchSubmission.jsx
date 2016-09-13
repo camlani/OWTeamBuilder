@@ -8,7 +8,22 @@ class MatchSubmission extends Component {
  	constructor(props) {
  		super(props);
  		this.state = {
-      queueNum: 1
+      queueNum: 1,
+      mapName: '',
+      type: '',
+      result: '',
+      date: '',
+      teamSkill: '',
+      enemySkill: '',
+      memberOne: '',
+      memberTwo: '',
+      memberThree: '',
+      memberFour: '',
+      memberFive: '',
+      memberSix: ''
+      //need to get the data out of the table row somehow
+      //need to pass the data out of the child into the
+      //parents
  		};
     //console.log("MapList " + this.props.mapList);
  	}
@@ -18,6 +33,13 @@ class MatchSubmission extends Component {
     console.log(e.target.value);
 
     this.setState({queueNum: parseInt(e.target.value)});
+
+  }
+  handleSubmit(e){
+    console.log("Submiting");
+    console.log(e);
+    //need to insert the data here
+
 
   }
   renderNumberofKnownPlayers(){
@@ -58,7 +80,7 @@ class MatchSubmission extends Component {
  			<div className="MatchSubmission">
         <h3>Enter Match Details <small>Add Information </small></h3>
         <hr/>
-          <Form className="MatchSubmissionForm" >
+          <Form className="MatchSubmissionForm" onSubmit={this.handleSubmit.bind(this)} >
           <Row>
               <Col xs={12} md={6}>
                 <FormGroup controlId="mapNameSelect">

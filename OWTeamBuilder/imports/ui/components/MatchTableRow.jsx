@@ -12,10 +12,23 @@ class MatchTableRow extends Component {
  	}
 
  	render() {
- 		return (
- 			<div className="MatchTableRow">
+    let mapObj = this.props.mapObj;
+    //console.log(mapObj);
 
- 			</div>
+ 		return (
+      <tr>
+        <td>{mapObj.mapName}</td>
+        <td>{mapObj.result}</td>
+        <td>{mapObj.date}</td>
+        <td>{mapObj.teamSkill}</td>
+        <td>{mapObj.enemySkill}</td>
+        <td>{mapObj.memberOne}</td>
+        <td>{mapObj.memberTwo}</td>
+        <td>{mapObj.memberThree}</td>
+        <td>{mapObj.memberFour}</td>
+        <td>{mapObj.memberFive}</td>
+        <td>{mapObj.memberSix}</td>
+      </tr>
  		);
  	}
 }

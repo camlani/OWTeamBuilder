@@ -2,6 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { Form, Table, Grid, Row, Button, PageHeader } from 'react-bootstrap';
 import { createContainer } from 'meteor/react-meteor-data';
 
+import MatchTableRow from './MatchTableRow.jsx'
+
+import { MatchStats } from '../../api/PlayerStats/methods.js'
+
 class MatchTable extends Component {
  	constructor(props) {
  		super(props);
@@ -11,14 +15,18 @@ class MatchTable extends Component {
  	}
 
   getMatchInfo() {
-    let mathData = [
+    let testData = this.props.matchStat;
+    console.log("This is the Test data");
+    console.log(testData);
+    let matchData = [
       {
         _id: 1,
         mapName: 'Hanamura',
         type: 'Assault',
-        result: w,
+        result: 'W',
         date: '9/11/2016',
-        skillDiff: '-300',
+        teamSkill: '2600',
+        enemySkill: '2512',
         memberOne: 'Camlani#1682',
         memberTwo: 'Enygmatic#11873',
         memberThree: 'jaydotjaypeg#1304',
@@ -30,9 +38,10 @@ class MatchTable extends Component {
         _id: 2,
         mapName: 'Temple of Anubis',
         type: 'Assault',
-        result: l,
+        result: 'L',
         date: '9/11/2016',
-        skillDiff: '-300',
+        teamSkill: '2621',
+        enemySkill: '2782',
         memberOne: 'Camlani#1682',
         memberTwo: 'Enygmatic#11873',
         memberThree: 'jaydotjaypeg#1304',
@@ -47,15 +56,16 @@ class MatchTable extends Component {
 
   renderMatchRows() {
     //this is where I need to have some sort of basic numbers
+    let matchData = this.getMatchInfo();
 
 
-
-    return (
-      <div/>
-    )
+    return matchData.map((matchObj) => (
+      <MatchTableRow key = {matchObj._id} mapObj = {matchObj}/>
+    ));
   }
 
  	render() {
+
  		return (
  			<div className ="MatchTable">
         <h3>Recent Matches <small>Table for Most Recent Matches</small></h3>
@@ -67,7 +77,8 @@ class MatchTable extends Component {
               <th>Map Name</th>
               <th>Result</th>
               <th>Date</th>
-              <th>Skill Difference</th>
+              <th>Team Rating</th>
+              <th>Enemy Rating</th>
               <th>Team Member 1</th>
               <th>Team Member 2</th>
               <th>Team Member 3</th>
@@ -75,8 +86,10 @@ class MatchTable extends Component {
               <th>Team Member 5</th>
               <th>Team Member 6</th>
             </tr>
-
           </thead>
+          <tbody>
+            {this.renderMatchRows()}
+          </tbody>
         </Table>
 
  			</div>
@@ -85,12 +98,13 @@ class MatchTable extends Component {
 }
 
 MatchTable.propTypes = {
-
+  matchStat: PropTypes.array.isRequired
 }
 
 export default createContainer(() => {
+  Meteor.subscribe('matchStat');
+
  	return {
-
-
+    matchStat: MatchStats.find({}, {sort : {createdAt : -1} } ).fetch()
  	};
 }, MatchTable);

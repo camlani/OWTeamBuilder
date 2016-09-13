@@ -4,12 +4,24 @@ import { Mongo } from 'meteor/mongo';
 import { HTTP } from 'meteor/http';
 
 export const Stats = new Mongo.Collection('playerStats')
+export const MatchStats = new Mongo.Collection('matchStat')
 
 
+if (Meteor.isServer){
 
+    Meteor.publish('matchStat', function matchStatsPublication() {
+      return MatchStats.find({});
+
+    });
+
+}
 
 Meteor.methods({
-     //test
+   'matchStats.insert'(matchDetails){
+          MatchStats.insert({
+            matchDetails
+          });
+   },
    requestPlayerStatistics(playerName, platform, region, mode){
       console.log("PlayerName: " + playerName);
       playerName = playerName.replace("#","-");
@@ -39,7 +51,6 @@ Meteor.methods({
 
       console.log(buildUrl);
 
-
       HTTP.get(buildUrl, {}, function(error, response){
         if (error){
           console.log(error);
@@ -53,9 +64,13 @@ Meteor.methods({
         }
       });
 
-
       return true;
    }
+
+
+
+
+
 
 
 
