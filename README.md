@@ -26,7 +26,23 @@ Recommended heroes as well
 
 Version 1
 -Ability to log matches in order to find win rate
--View the matches, send matches to players (could verify accounts if needed be)
+-View the matches, send matches to players
+-Need to try to get battle.net oath account working
+-
+
+
+Brain Dump
+-Match Tracking, then possibly being able to make a league
+-Make a list of counters of each hero and the best counter on the team based upon
+  what ever metric that may be
+-Could refresh stats every 10 mins to capture a session perhaps
+-run every day or hour to check and keep track of daily stats
+-can build out team of members with names saved with battle.net
+  for ease of Tracking
+-Ability to draw up strats as well.
+-when you enter a match it populates for other people on your team as well.
+
+
 
 
 Directory Structure
