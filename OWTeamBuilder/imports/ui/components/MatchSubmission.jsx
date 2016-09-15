@@ -12,7 +12,7 @@ class MatchSubmission extends Component {
       mapName: '',
       type: '',
       result: '',
-      date: '',
+      date: new Date(),
       teamSkill: '',
       enemySkill: '',
       memberOne: '',
@@ -27,6 +27,18 @@ class MatchSubmission extends Component {
  		};
     //console.log("MapList " + this.props.mapList);
  	}
+  getTeamArray(){
+    let teamMemberArray = [
+      {_id: 'member1', fieldName: 'memberOne'},
+      {_id: 'member2', fieldName: 'memberTwo'},
+      {_id: 'member3', fieldName: 'memberThree'},
+      {_id: 'member4', fieldName: 'memberFour'},
+      {_id: 'member5', fieldName: 'memberFive'},
+      {_id: 'member6', fieldName: 'memberSix'}
+    ]
+
+    return teamMemberArray;
+  }
 
   handleTeamQueue(e){
     //e.preventDefault();
@@ -35,9 +47,69 @@ class MatchSubmission extends Component {
     this.setState({queueNum: parseInt(e.target.value)});
 
   }
+
+  handleteamGroupRating(e){
+    e.preventDefault(e);
+    this.setState({teamSkill: parseInt(e.target.value)});
+  }
+
+  handleoppGroupRating(e){
+    e.preventDefault(e);
+    this.setState({enemySkill: parseInt(e.target.value)});
+  }
+  handlegameResult(e){
+    e.preventDefault(e);
+    this.setState({result: e.target.value});
+  }
+  handleMap(e){
+    e.preventDefault(e);
+    let mapArray = this.props.mapList;
+    console.log(mapArray);
+
+    this.setState({mapName: e.target.value,
+                   type: mapArray.find(mapObj => mapObj.mapName === e.target.value).type
+                  });
+  }
+  handleTeamMembers(e){
+    e.preventDefault(e);
+    //console.log(e.target.value);
+    //let teamArray = this.getTeamArray();
+
+    switch (e.target.id){
+        case 'member1':
+          this.setState({memberOne: e.target.value});
+          break;
+        case 'member2':
+          this.setState({memberTwo: e.target.value});
+          break;
+        case 'member3':
+          this.setState({memberThree: e.target.value});
+          break;
+        case 'member4':
+          this.setState({memberFour: e.target.value});
+          break;
+        case 'member5':
+          this.setState({memberFive: e.target.value});
+          break;
+        case 'member6':
+          this.setState({memberSix: e.target.value});
+          break;
+
+    }
+    //console.log(teamArray);
+
+    //in this method tell which state to set from children
+
+  }
   handleSubmit(e){
+    e.preventDefault();
+    console.log("State");
+    console.log(this.state);
     console.log("Submiting");
-    console.log(e);
+
+    //need to add handle options for every bit of data and save state,
+    //from there then add the meteor insert function into this.
+    //also need to grab the data from each of the Teamm Member inserts
     //need to insert the data here
 
 
@@ -64,7 +136,8 @@ class MatchSubmission extends Component {
 
     //console.log(populateList);
     return populateList.map((populateObj) =>(
-      <MatchSubmissionTeamMember key= {populateObj.key} controlId = {populateObj.controlId} controlLabel = {populateObj.controlLabel} />
+      <MatchSubmissionTeamMember key= {populateObj.key} controlId = {populateObj.controlId} controlLabel = {populateObj.controlLabel}
+       changeteamMember ={this.handleTeamMembers.bind(this)}/>
     ));
   }
 
@@ -83,7 +156,7 @@ class MatchSubmission extends Component {
           <Form className="MatchSubmissionForm" onSubmit={this.handleSubmit.bind(this)} >
           <Row>
               <Col xs={12} md={6}>
-                <FormGroup controlId="mapNameSelect">
+                <FormGroup controlId="mapNameSelect" onChange={this.handleMap.bind(this)}>
                   <ControlLabel>Map Name: </ControlLabel>
                   {' '}
                   <FormControl componentClass="select" placeholder="select">
@@ -91,23 +164,24 @@ class MatchSubmission extends Component {
                   </FormControl>
                 </FormGroup>
                 {' '}
-                <FormGroup controlId = "teamGroupRating">
+                <FormGroup controlId = "teamGroupRating" onChange={this.handleteamGroupRating.bind(this)}>
                   <ControlLabel>Team Group Rating: </ControlLabel>
                   {' '}
                   <FormControl type="text" placeholder ="Group Rating"/>
                 </FormGroup>
                 {' '}
-                <FormGroup controlId = "oppGroupRating">
+                <FormGroup controlId = "oppGroupRating"  onChange={this.handleoppGroupRating.bind(this)}>
                   <ControlLabel>Opponent Group Rating: </ControlLabel>
                   {' '}
                   <FormControl type="text" placeholder ="Opponent Group Rating"/>
                 </FormGroup>
-                <FormGroup controlId = "gameResult">
+                <FormGroup controlId = "gameResult"  onChange={this.handlegameResult.bind(this)} >
                   <ControlLabel>Game Result: </ControlLabel>
                   {' '}
-                  <FormControl componentClass="select" placeholder="select" >
+                  <FormControl componentClass="select" placeholder="select"  >
                       <option key="Win1">Win</option>
                       <option key="Loss2">Loss</option>
+                      <option key="Draw3">Draw</option>
                   </FormControl>
                 </FormGroup>
               </Col>

@@ -16,9 +16,10 @@ class MatchSubmissionTeamMember extends Component {
  	render() {
     let controlId = this.props.controlId;
     let controlLabel = this.props.controlLabel;
+    let onChangeForm = this.props.changeteamMember;
     //console.log("controlId: " + controlId + " controlLabel: " + controlLabel);
  		return (
-      <FormGroup controlId = {controlId}>
+      <FormGroup controlId = {controlId} onChange={onChangeForm}>
         <ControlLabel>{controlLabel} </ControlLabel>
         {' '}
         <FormControl type="text" placeholder ="Battle.net ID with #"/>
