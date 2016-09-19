@@ -18,9 +18,20 @@ if (Meteor.isServer){
 
 Meteor.methods({
    'matchStats.insert'(matchDetails){
+          //need to do a check on if the user is logged in
+          //or else do not insert
+          console.log(matchDetails);
           MatchStats.insert({
-            matchDetails
+            matchDetails,
+            createdAt: new Date(),
+            createdBy: Meteor.userId()
           });
+   },
+   'matchStats.remove'(matchId){
+
+          check(matchId, String);
+          //remove the matchId
+          MatchStats.remove(matchId);
    },
    requestPlayerStatistics(playerName, platform, region, mode){
       console.log("PlayerName: " + playerName);

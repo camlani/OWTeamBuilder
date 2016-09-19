@@ -7,6 +7,7 @@ import PlayerTable from './PlayerTable.jsx'
 
 
 
+
 // App component - represents the whole app
  class App extends Component {
   constructor(props){

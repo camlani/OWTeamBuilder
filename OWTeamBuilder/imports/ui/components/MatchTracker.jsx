@@ -5,6 +5,8 @@ import { Meteor } from 'meteor/meteor';
 
 import MatchTable from './MatchTable.jsx'
 import MatchSubmission from './MatchSubmission.jsx'
+import AccountsUIWrapper from './AccountsUIWrapper.jsx'
+import MatchNavbar from './MatchNavbar.jsx'
 
 class MatchTracker extends Component {
   constructor(props) {
@@ -32,13 +34,16 @@ class MatchTracker extends Component {
     return mapArray;
   }
 
-
-
+  renderMatchNavbar(){
+    return (
+      <MatchNavbar/>
+    );
+  }
   renderMatchTable(){
-
+    let mapList = this.getMaps();
 
     return(
-      <MatchTable/>
+      <MatchTable mapList = {mapList}/>
     );
   }
   renderMatchSubmission(){
@@ -50,14 +55,18 @@ class MatchTracker extends Component {
 
   render() {
     return (
-      <div className="container">
-        <header>
-          <PageHeader>Overwatch Match Tracker <small>Keep Track of Matches</small></PageHeader>
-        </header>
 
-        {this.renderMatchSubmission()}
-        {this.renderMatchTable()}
-      </div>
+        <div className="container">
+        {/*  <AccountsUIWrapper />*/}
+          {this.renderMatchNavbar()}
+          <header>
+            <PageHeader>Overwatch Match Tracker <small>Keep Track of Matches</small></PageHeader>
+          </header>
+
+          {this.renderMatchSubmission()}
+          {this.renderMatchTable()}
+
+        </div>
     );
   }
 

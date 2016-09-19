@@ -9,9 +9,9 @@ class MatchSubmission extends Component {
  		super(props);
  		this.state = {
       queueNum: 1,
-      mapName: '',
+      mapName: 'Hanamura',
       type: '',
-      result: '',
+      result: 'Win',
       date: new Date(),
       teamSkill: '',
       enemySkill: '',
@@ -42,7 +42,7 @@ class MatchSubmission extends Component {
 
   handleTeamQueue(e){
     //e.preventDefault();
-    console.log(e.target.value);
+    //console.log(e.target.value);
 
     this.setState({queueNum: parseInt(e.target.value)});
 
@@ -64,7 +64,7 @@ class MatchSubmission extends Component {
   handleMap(e){
     e.preventDefault(e);
     let mapArray = this.props.mapList;
-    console.log(mapArray);
+    //console.log(mapArray);
 
     this.setState({mapName: e.target.value,
                    type: mapArray.find(mapObj => mapObj.mapName === e.target.value).type
@@ -77,22 +77,22 @@ class MatchSubmission extends Component {
 
     switch (e.target.id){
         case 'member1':
-          this.setState({memberOne: e.target.value});
+          this.setState({memberOne: e.target.value.trim()});
           break;
         case 'member2':
-          this.setState({memberTwo: e.target.value});
+          this.setState({memberTwo: e.target.value.trim()});
           break;
         case 'member3':
-          this.setState({memberThree: e.target.value});
+          this.setState({memberThree: e.target.value.trim()});
           break;
         case 'member4':
-          this.setState({memberFour: e.target.value});
+          this.setState({memberFour: e.target.value.trim()});
           break;
         case 'member5':
-          this.setState({memberFive: e.target.value});
+          this.setState({memberFive: e.target.value.trim()});
           break;
         case 'member6':
-          this.setState({memberSix: e.target.value});
+          this.setState({memberSix: e.target.value.trim()});
           break;
 
     }
@@ -103,9 +103,11 @@ class MatchSubmission extends Component {
   }
   handleSubmit(e){
     e.preventDefault();
-    console.log("State");
-    console.log(this.state);
     console.log("Submiting");
+    console.log(this.state);
+
+    Meteor.call('matchStats.insert', this.state);
+
 
     //need to add handle options for every bit of data and save state,
     //from there then add the meteor insert function into this.

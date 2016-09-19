@@ -28,7 +28,9 @@ Version 1
 -Ability to log matches in order to find win rate
 -View the matches, send matches to players
 -Need to try to get battle.net oath account working
--
+-Add a Router, the nav bar
+-edit and delete rows
+-have copied
 
 
 Brain Dump
@@ -41,6 +43,8 @@ Brain Dump
   for ease of Tracking
 -Ability to draw up strats as well.
 -when you enter a match it populates for other people on your team as well.
+-Make nicknames for your teammates
+-maybe adding some color codes for the different team
 
 
 

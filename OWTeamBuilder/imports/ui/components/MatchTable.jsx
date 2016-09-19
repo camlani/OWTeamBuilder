@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import MatchTableRow from './MatchTableRow.jsx'
 
+
 import { MatchStats } from '../../api/PlayerStats/methods.js'
 
 class MatchTable extends Component {
@@ -15,9 +16,9 @@ class MatchTable extends Component {
  	}
 
   getMatchInfo() {
-    let testData = this.props.matchStat;
+    let matchdbData = this.props.matchStat;
     console.log("This is the Test data");
-    console.log(testData);
+    console.log(matchdbData);
     let matchData = [
       {
         _id: 1,
@@ -50,17 +51,18 @@ class MatchTable extends Component {
         memberSix: 'TaylorMade#12821',
       }
     ]
-    return matchData;
+    return matchdbData;
 
   }
 
   renderMatchRows() {
     //this is where I need to have some sort of basic numbers
     let matchData = this.getMatchInfo();
+    let mapList = this.props.mapList;
 
 
     return matchData.map((matchObj) => (
-      <MatchTableRow key = {matchObj._id} mapObj = {matchObj}/>
+      <MatchTableRow key = {matchObj._id} mapObj = {matchObj} mapList = {mapList}/>
     ));
   }
 
@@ -74,17 +76,15 @@ class MatchTable extends Component {
         <Table striped bordered condensed hover>
           <thead>
             <tr>
-              <th>Map Name</th>
               <th>Result</th>
               <th>Date</th>
+              <th>Map Name</th>
               <th>Team Rating</th>
               <th>Enemy Rating</th>
-              <th>Team Member 1</th>
-              <th>Team Member 2</th>
-              <th>Team Member 3</th>
-              <th>Team Member 4</th>
-              <th>Team Member 5</th>
-              <th>Team Member 6</th>
+              <th>Team Roster</th>
+              <th>Verified</th>
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
