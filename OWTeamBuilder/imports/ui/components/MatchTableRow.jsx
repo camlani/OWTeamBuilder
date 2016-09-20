@@ -78,7 +78,7 @@ class MatchTableRow extends Component {
             <Modal.Title>Edit Match</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <MatchEditModal mapObj = {mapObj}/>
+            <MatchEditModal mapObj = {mapObj} mapList = {this.props.mapList}/>
           <hr />
 
           </Modal.Body>
