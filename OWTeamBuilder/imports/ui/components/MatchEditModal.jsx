@@ -14,7 +14,7 @@ class MatchEditModal extends Component {
  		this.state = {
       showModal: true,
       //need to put these in a different method or another object
-      queueNum: 1,
+      queueNum: inmatchDetails.queueNum,
       mapName: inmatchDetails.mapName,
       type:  inmatchDetails.type,
       result: inmatchDetails.result,
@@ -105,7 +105,12 @@ class MatchEditModal extends Component {
     console.log("Submiting");
     console.log(this.state);
 
-    Meteor.call('matchStats.insert', this.state);
+    let insertID = this.props.mapObj;
+    console.log(insertID);
+    let insertData = this.state;
+    delete insertData.showModal;
+    console.log(insertData);
+    Meteor.call('matchStats.update', insertID, insertData);
 
 
     //need to add handle options for every bit of data and save state,
@@ -124,29 +129,77 @@ class MatchEditModal extends Component {
 
 
     let populateList = [], controlId, controlLabel, key, popObj;
+    let currentplayer =  "";
     for (let i = 1; i <= queueNum; i ++ ){
+
+      switch (i){
+          case 1:
+            currentplayer = this.state.memberOne;
+            break;
+          case 2:
+            currentplayer = this.state.memberTwo;
+            break;
+          case 3:
+            currentplayer = this.state.memberThree;
+            break;
+          case 4:
+            currentplayer = this.state.memberFour;
+            break;
+          case 5:
+            currentplayer = this.state.memberFive;
+            break;
+          case 6:
+            currentplayer = this.state.memberSix;
+            break;
+
+      }
 
       popObj = {
         key: i,
         controlId: "member" + i,
-        controlLabel: "Team Member " + i + ": "
+        controlLabel: "Team Member " + i + ": ",
+        currentplayer: currentplayer
+
       }
       populateList.push(popObj);
     }
-    /*
-    <FormGroup controlId = "memberOne">
-      <ControlLabel>Team Member One: </ControlLabel>
-      {' '}
-      <FormControl type="text" placeholder ="Battle.net ID with #"/>
-    </FormGroup>*/
-
     //console.log(populateList);
     return populateList.map((populateObj) =>(
       <MatchSubmissionTeamMember key= {populateObj.key} controlId = {populateObj.controlId} controlLabel = {populateObj.controlLabel}
-       changeteamMember ={this.handleTeamMembers.bind(this)}/>
+      currentplayer = {populateObj.currentplayer} changeteamMember ={this.handleTeamMembers.bind(this)}/>
     ));
   }
+  renderQueueSelect(){
+    let mapObj = this.props.mapObj;
+    let queueNum = mapObj.matchDetails.queueNum;
 
+    let populateList = [], controlId, controlLabel;
+    let currentplayer =  "";
+
+    for (let i = 1; i <= 6; i ++ ){
+
+      if( i  == queueNum){
+        popObj = {
+          key: i,
+        }
+      } else {
+        popObj = {
+          key: i,
+        }
+      }
+      populateList.push(popObj);
+    }
+    //console.log(populateList);
+    //need to find out how to default value
+    //need to figure this out defaultValue for the others as well.
+    return populateList.map((populateObj) =>(
+
+        <option key={populateObj.key} >{populateObj.key}</option>
+
+
+    ));
+
+  }
   renderMapNames(){
     let mapList = this.props.mapList;
     //console.log(mapList);
@@ -182,13 +235,13 @@ class MatchEditModal extends Component {
                 <FormGroup controlId = "teamGroupRating" onChange={this.handleteamGroupRating.bind(this)}>
                   <ControlLabel>Team Group Rating: </ControlLabel>
                   {' '}
-                  <FormControl type="text" placeholder ="Group Rating"/>
+                  <FormControl type="text" placeholder ="Group Rating" defaultValue = {matchDetails.teamSkill}/>
                 </FormGroup>
                 {' '}
                 <FormGroup controlId = "oppGroupRating"  onChange={this.handleoppGroupRating.bind(this)}>
                   <ControlLabel>Opponent Group Rating: </ControlLabel>
                   {' '}
-                  <FormControl type="text" placeholder ="Opponent Group Rating"/>
+                  <FormControl type="text" placeholder ="Opponent Group Rating" defaultValue = {matchDetails.enemySkill}/>
                 </FormGroup>
                 <FormGroup controlId = "gameResult"  onChange={this.handlegameResult.bind(this)} >
                   <ControlLabel>Game Result: </ControlLabel>
@@ -205,12 +258,7 @@ class MatchEditModal extends Component {
                 <ControlLabel>Queue Size: </ControlLabel>
                 {' '}
                 <FormControl componentClass="select" placeholder="select" onChange={this.handleTeamQueue.bind(this)} >
-                    <option key="1" defaultValue>1</option>
-                    <option key="2">2</option>
-                    <option key="3">3</option>
-                    <option key="4">4</option>
-                    <option key="5">5</option>
-                    <option key="6">6</option>
+                  {this.renderQueueSelect()}
                 </FormControl>
               </FormGroup>
               {' '}

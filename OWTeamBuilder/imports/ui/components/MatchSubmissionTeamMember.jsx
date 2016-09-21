@@ -17,6 +17,18 @@ class MatchSubmissionTeamMember extends Component {
     let controlId = this.props.controlId;
     let controlLabel = this.props.controlLabel;
     let onChangeForm = this.props.changeteamMember;
+    let playerName = this.props.currentplayer;
+    //console.log(playerName);
+    if(playerName){
+      return (
+        <FormGroup controlId = {controlId} onChange={onChangeForm}>
+          <ControlLabel>{controlLabel} </ControlLabel>
+          {' '}
+          <FormControl type="text" placeholder ="Battle.net ID with #" defaultValue= {playerName}/>
+        </FormGroup>
+      );
+
+    }
     //console.log("controlId: " + controlId + " controlLabel: " + controlLabel);
  		return (
       <FormGroup controlId = {controlId} onChange={onChangeForm}>

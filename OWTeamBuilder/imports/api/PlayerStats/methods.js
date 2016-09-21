@@ -33,6 +33,16 @@ Meteor.methods({
           //remove the matchId
           MatchStats.remove(matchId);
    },
+   'matchStats.update'(matchID, matchDetails){
+          check(matchID, String);
+
+          MatchStats.update(matchID,
+             {$set:
+               {matchDetails: matchDetails}
+             }
+           );
+
+   },
    requestPlayerStatistics(playerName, platform, region, mode){
       console.log("PlayerName: " + playerName);
       playerName = playerName.replace("#","-");
