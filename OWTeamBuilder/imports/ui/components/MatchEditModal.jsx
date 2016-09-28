@@ -200,6 +200,13 @@ class MatchEditModal extends Component {
     ));
 
   }
+  //need this method
+  mapNameToKey(){
+    //need to iterate through the map array and then find the key associated with
+    //the name of the map then pass itdown as the value.
+
+  }
+
   renderMapNames(){
     let mapList = this.props.mapList;
     //console.log(mapList);
@@ -227,7 +234,7 @@ class MatchEditModal extends Component {
                 <FormGroup controlId="mapNameSelect" onChange={this.handleMap.bind(this)}>
                   <ControlLabel>Map Name: </ControlLabel>
                   {' '}
-                  <FormControl componentClass="select" placeholder="select">
+                  <FormControl componentClass="select" placeholder="select" >
                     {this.renderMapNames()}
                   </FormControl>
                 </FormGroup>
@@ -246,10 +253,10 @@ class MatchEditModal extends Component {
                 <FormGroup controlId = "gameResult"  onChange={this.handlegameResult.bind(this)} >
                   <ControlLabel>Game Result: </ControlLabel>
                   {' '}
-                  <FormControl componentClass="select" placeholder="select"  >
-                      <option key="Win1">Win</option>
-                      <option key="Loss2">Loss</option>
-                      <option key="Draw3">Draw</option>
+                  <FormControl componentClass="select" placeholder="select" value={matchDetails.result} onChange={this.handlegameResult.bind(this)} >
+                      <option key="Win">Win</option>
+                      <option key="Loss">Loss</option>
+                      <option key="Draw">Draw</option>
                   </FormControl>
                 </FormGroup>
               </Col>
@@ -257,7 +264,7 @@ class MatchEditModal extends Component {
               <FormGroup controlId="queueSize">
                 <ControlLabel>Queue Size: </ControlLabel>
                 {' '}
-                <FormControl componentClass="select" placeholder="select" onChange={this.handleTeamQueue.bind(this)} >
+                <FormControl componentClass="select" placeholder="select" value={matchDetails.queueNum} onChange={this.handleTeamQueue.bind(this)} >
                   {this.renderQueueSelect()}
                 </FormControl>
               </FormGroup>
