@@ -3,6 +3,8 @@ import {Grid, Row, Button, PageHeader, Navbar, Nav, NavItem, NavDropdown, MenuIt
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
+import { IndexLink, Link } from 'react-router';
+
 import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 
 class MatchNavbar extends Component {
@@ -26,10 +28,10 @@ class MatchNavbar extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <NavItem eventKey={1} href="#">Match Tracker</NavItem>
-              <NavItem eventKey={2} href="#">Match History</NavItem>
-              <NavItem eventKey={3} href="#">Team Builder</NavItem>
-              <NavItem eventKey={2} href="#">{<AccountsUIWrapper />}</NavItem>
+              <NavItem eventKey={1} href="/"></NavItem>
+              <NavItem eventKey={2} href="/MatchHistory">Match History</NavItem>
+              <NavItem eventKey={3} >Team Builder</NavItem>
+              <NavItem eventKey={2} >{<AccountsUIWrapper />}</NavItem>
             </Nav>
           </Navbar.Collapse>
         </Navbar>

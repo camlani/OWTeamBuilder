@@ -26,7 +26,8 @@ class MatchEditModal extends Component {
       memberThree: inmatchDetails.memberThree,
       memberFour: inmatchDetails.memberFour,
       memberFive: inmatchDetails.memberFive,
-      memberSix: inmatchDetails.memberSix
+      memberSix: inmatchDetails.memberSix,
+      notes: inmatchDetails.notes
 
 
  		};
@@ -100,6 +101,10 @@ class MatchEditModal extends Component {
     //in this method tell which state to set from children
 
   }
+  handleChangeNotes(e){
+    e.preventDefault(e);
+    this.setState({notes: e.target.value});
+  }
   handleSubmit(e){
     e.preventDefault();
     console.log("Submiting");
@@ -111,7 +116,9 @@ class MatchEditModal extends Component {
     delete insertData.showModal;
     console.log(insertData);
     Meteor.call('matchStats.update', insertID, insertData);
+    //need to some how close the modal after submit
 
+    //this.closeModal();
 
     //need to add handle options for every bit of data and save state,
     //from there then add the meteor insert function into this.
@@ -200,13 +207,6 @@ class MatchEditModal extends Component {
     ));
 
   }
-  //need this method
-  mapNameToKey(){
-    //need to iterate through the map array and then find the key associated with
-    //the name of the map then pass itdown as the value.
-
-  }
-
   renderMapNames(){
     let mapList = this.props.mapList;
     //console.log(mapList);
@@ -218,7 +218,7 @@ class MatchEditModal extends Component {
     let mapObj = this.props.mapObj;
     let matchDetails = mapObj.matchDetails;
 
-    console.log(matchDetails);
+    //console.log(matchDetails);
     //need to pass this back to the MatchTableRow on the submit and update
     //the match corresponding to it
     //need to copy this match submission and then from there generate it all
@@ -231,10 +231,10 @@ class MatchEditModal extends Component {
           <Form className="MatchSubmissionForm" onSubmit={this.handleSubmit.bind(this)} >
           <Row>
               <Col xs={12} md={6}>
-                <FormGroup controlId="mapNameSelect" onChange={this.handleMap.bind(this)}>
+                <FormGroup controlId="mapNameSelect"  onChange={this.handleMap.bind(this)}>
                   <ControlLabel>Map Name: </ControlLabel>
                   {' '}
-                  <FormControl componentClass="select" placeholder="select" >
+                  <FormControl componentClass="select" placeholder="select" defaultValue={matchDetails.mapName} >
                     {this.renderMapNames()}
                   </FormControl>
                 </FormGroup>
@@ -253,7 +253,7 @@ class MatchEditModal extends Component {
                 <FormGroup controlId = "gameResult"  onChange={this.handlegameResult.bind(this)} >
                   <ControlLabel>Game Result: </ControlLabel>
                   {' '}
-                  <FormControl componentClass="select" placeholder="select" value={matchDetails.result} onChange={this.handlegameResult.bind(this)} >
+                  <FormControl componentClass="select" placeholder="select" defaultValue={matchDetails.result} onChange={this.handlegameResult.bind(this)} >
                       <option key="Win">Win</option>
                       <option key="Loss">Loss</option>
                       <option key="Draw">Draw</option>
@@ -264,15 +264,19 @@ class MatchEditModal extends Component {
               <FormGroup controlId="queueSize">
                 <ControlLabel>Queue Size: </ControlLabel>
                 {' '}
-                <FormControl componentClass="select" placeholder="select" value={matchDetails.queueNum} onChange={this.handleTeamQueue.bind(this)} >
+                <FormControl componentClass="select" placeholder="select" defaultValue={matchDetails.queueNum} onChange={this.handleTeamQueue.bind(this)} >
                   {this.renderQueueSelect()}
                 </FormControl>
               </FormGroup>
               {' '}
 
               {this.renderNumberofKnownPlayers()}
-
-              <Button type="submit" bsStyle="success">Add Match</Button>
+              <FormGroup controlId="matchNotes"  onChange={this.handleChangeNotes.bind(this)}>
+                      <ControlLabel>Match Notes: </ControlLabel>
+                      {' '}
+                      <FormControl componentClass="textarea" defaultValue = {matchDetails.notes}/>
+              </FormGroup>
+              <Button type="submit" bsStyle="success">Save Match</Button>
               </Col>
             </Row>
           </Form>

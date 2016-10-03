@@ -29,9 +29,15 @@ Version 1
 -View the matches, send matches to players
 -Need to try to get battle.net oath account working
 -Add a Router, the nav bar
--edit and delete rows
--have copied
+-edit and delete rows (Done)
+-add notes (done)
+-add the editing of dates
+-have copies of the matches on each person
 
+-TODO
+-need to check out meteor chef implementation of how he handles the routing
+need to put the navbar in the outer most container so it persists.
+https://themeteorchef.com/snippets/react-router-basics/#tmc-setting-up-a-layout-component
 
 Brain Dump
 -Match Tracking, then possibly being able to make a league

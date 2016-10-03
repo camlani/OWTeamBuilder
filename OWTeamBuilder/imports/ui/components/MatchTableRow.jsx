@@ -10,7 +10,8 @@ class MatchTableRow extends Component {
  	constructor(props) {
  		super(props);
  		this.state = {
-      showModal: false
+      showModal: false,
+      showViewModal: false
  		};
  	}
   closeModal(){
@@ -19,12 +20,14 @@ class MatchTableRow extends Component {
 
   openModal(){
     this.setState({ showModal: true });
-    /*
-    let mapObj = this.props.mapObj;
-    let matchDetails = mapObj.matchDetails;*/
+  }
 
-    //console.log("Clicked Edit");
+  closeViewModal(){
+    this.setState({ showViewModal: false });
+  }
 
+  openViewModal(){
+    this.setState({ showViewModal: true});
   }
 
   deleteThisMatch() {
@@ -59,8 +62,9 @@ class MatchTableRow extends Component {
         //console.log(roster[i]);
         parseRoster += roster[i] + "\n";
       }
-
     }
+
+
 
  		return (
       <tr>
@@ -70,9 +74,11 @@ class MatchTableRow extends Component {
         <td>{matchDetails.teamSkill}</td>
         <td>{matchDetails.enemySkill}</td>
         <td><pre>{parseRoster}</pre></td>
+        <td><Button onClick={this.openViewModal.bind(this)}><Glyphicon glyph="list-alt"/> View</Button> </td>
         <td><Button><Glyphicon glyph="ok"/> Verify</Button></td>
         <td><Button onClick={this.openModal.bind(this)}> <Glyphicon glyph="pencil"/> Edit</Button></td>
         <td><Button onClick={this.deleteThisMatch.bind(this)}><Glyphicon glyph="remove"/> Remove</Button></td>
+
         <Modal show={this.state.showModal} onHide={this.closeModal.bind(this)}>
           <Modal.Header closeButton>
             <Modal.Title>Edit Match</Modal.Title>
@@ -83,7 +89,21 @@ class MatchTableRow extends Component {
 
           </Modal.Body>
           <Modal.Footer>
-            <Button >Close</Button>
+            <Button onClick={this.closeModal.bind(this)} >Close</Button>
+          </Modal.Footer>
+        </Modal>
+
+        <Modal show={this.state.showViewModal} onHide={this.openViewModal.bind(this)}>
+          <Modal.Header closeButton>
+            <Modal.Title>View Notes</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <pre>{matchDetails.notes}</pre>
+          <hr />
+
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={this.closeViewModal.bind(this)}>Close</Button>
           </Modal.Footer>
         </Modal>
       </tr>

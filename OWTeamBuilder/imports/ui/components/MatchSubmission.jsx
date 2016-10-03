@@ -20,7 +20,8 @@ class MatchSubmission extends Component {
       memberThree: '',
       memberFour: '',
       memberFive: '',
-      memberSix: ''
+      memberSix: '',
+      notes:''
       //need to get the data out of the table row somehow
       //need to pass the data out of the child into the
       //parents
@@ -100,6 +101,10 @@ class MatchSubmission extends Component {
 
     //in this method tell which state to set from children
 
+  }
+  handleChangeNotes(e){
+    e.preventDefault(e);
+    this.setState({notes: e.target.value});
   }
   handleSubmit(e){
     e.preventDefault();
@@ -203,6 +208,12 @@ class MatchSubmission extends Component {
               {' '}
 
               {this.renderNumberofKnownPlayers()}
+
+              <FormGroup controlId="matchNotes"  onChange={this.handleChangeNotes.bind(this)}>
+                      <ControlLabel>Match Notes: </ControlLabel>
+                      {' '}
+                      <FormControl componentClass="textarea"/>
+              </FormGroup>
 
               <Button type="submit" bsStyle="success">Add Match</Button>
               </Col>

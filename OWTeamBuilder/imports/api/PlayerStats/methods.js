@@ -29,12 +29,12 @@ Meteor.methods({
    },
    'matchStats.remove'(matchId){
 
-          check(matchId, String);
+          //check(matchId, String);
           //remove the matchId
           MatchStats.remove(matchId);
    },
    'matchStats.update'(matchID, matchDetails){
-          check(matchID, String);
+          //check(matchID, String);
 
           MatchStats.update(matchID,
              {$set:

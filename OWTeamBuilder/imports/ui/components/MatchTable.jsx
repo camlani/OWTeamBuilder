@@ -17,8 +17,8 @@ class MatchTable extends Component {
 
   getMatchInfo() {
     let matchdbData = this.props.matchStat;
-    console.log("This is the Test data");
-    console.log(matchdbData);
+    //console.log("This is the Test data");
+    //console.log(matchdbData);
     let matchData = [
       {
         _id: 1,
@@ -82,6 +82,7 @@ class MatchTable extends Component {
               <th>Team Rating</th>
               <th>Enemy Rating</th>
               <th>Team Roster</th>
+              <th>Notes</th>
               <th>Verified</th>
               <th>Edit</th>
               <th>Delete</th>
