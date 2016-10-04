@@ -58,7 +58,7 @@ class MatchTracker extends Component {
 
         <div className="container">
         {/*  <AccountsUIWrapper />*/}
-          {this.renderMatchNavbar()}
+
           <header>
             <PageHeader>Overwatch Match Tracker <small>Keep Track of Matches</small></PageHeader>
           </header>

@@ -57,10 +57,11 @@ class MatchHistory extends Component {
     return (
 
         <div className="container">
-        {/*  <AccountsUIWrapper />*/}
-          {this.renderMatchNavbar()}
+
+
+        
           <header>
-            <PageHeader>Overwatch Match Tracker <small>Keep Track of Matches</small></PageHeader>
+            <PageHeader>Match Stats <small>View Match Stats</small></PageHeader>
           </header>
 
           {this.renderMatchTable()}

@@ -28,15 +28,15 @@ Version 1
 -Ability to log matches in order to find win rate
 -View the matches, send matches to players
 -Need to try to get battle.net oath account working
--Add a Router, the nav bar
+-Add a Router, the nav bar(done)
 -edit and delete rows (Done)
 -add notes (done)
 -add the editing of dates
 -have copies of the matches on each person
 
 -TODO
--need to check out meteor chef implementation of how he handles the routing
-need to put the navbar in the outer most container so it persists.
+-need to check out meteor chef implementation of how he handles the routing(done)
+need to put the navbar in the outer most container so it persists.(done)
 https://themeteorchef.com/snippets/react-router-basics/#tmc-setting-up-a-layout-component
 
 Brain Dump

@@ -4,6 +4,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
 import { IndexLink, Link } from 'react-router';
+import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 
 import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 
@@ -28,8 +29,12 @@ class MatchNavbar extends Component {
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <NavItem eventKey={1} href="/"></NavItem>
-              <NavItem eventKey={2} href="/MatchHistory">Match History</NavItem>
+              <IndexLinkContainer to={{ pathname: '/'}}  >
+                <NavItem eventKey={1} >Home</NavItem>
+              </IndexLinkContainer>
+              <LinkContainer to= {{ pathname: '/MatchStats' }} >
+                <NavItem eventKey={2} >Match Stats</NavItem>
+              </LinkContainer>
               <NavItem eventKey={3} >Team Builder</NavItem>
               <NavItem eventKey={2} >{<AccountsUIWrapper />}</NavItem>
             </Nav>
