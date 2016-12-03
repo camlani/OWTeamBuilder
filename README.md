@@ -51,7 +51,7 @@ Brain Dump
 -when you enter a match it populates for other people on your team as well.
 -Make nicknames for your teammates
 -maybe adding some color codes for the different team
-
+-Filtering based upon win loss, Map, with percentages
 
 
 

@@ -29,7 +29,8 @@ class MatchTracker extends Component {
       {_id: 9, mapName: 'Numbani',  type: 'Hybrid'},
       {_id: 10, mapName: 'Ilios', type: 'Control'},
       {_id: 11, mapName: 'Lijang Tower', type: 'Control'},
-      {_id: 12, mapName: 'Nepal', type: 'Control'}
+      {_id: 12, mapName: 'Nepal', type: 'Control'},
+      {_id: 13, mapName: 'Eichenwalde', type: 'Hybrid'}
     ]
     return mapArray;
   }

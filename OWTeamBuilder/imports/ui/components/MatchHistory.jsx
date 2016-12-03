@@ -7,6 +7,7 @@ import MatchTable from './MatchTable.jsx'
 import MatchSubmission from './MatchSubmission.jsx'
 import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 import MatchNavbar from './MatchNavbar.jsx'
+import MatchStatsContainer from './MatchStatsContainer.jsx'
 
 class MatchHistory extends Component {
   constructor(props) {
@@ -29,11 +30,17 @@ class MatchHistory extends Component {
       {_id: 9, mapName: 'Numbani',  type: 'Hybrid'},
       {_id: 10, mapName: 'Ilios', type: 'Control'},
       {_id: 11, mapName: 'Lijang Tower', type: 'Control'},
-      {_id: 12, mapName: 'Nepal', type: 'Control'}
+      {_id: 12, mapName: 'Nepal', type: 'Control'},
+      {_id: 13, mapName: 'Eichenwalde', type: 'Hybrid'}
     ]
     return mapArray;
   }
 
+  renderMatchStatsContainer(){
+      return (
+        <MatchStatsContainer/>
+      );
+  }
   renderMatchNavbar(){
     return (
       <MatchNavbar/>
@@ -59,12 +66,14 @@ class MatchHistory extends Component {
         <div className="container">
 
 
-        
+
           <header>
             <PageHeader>Match Stats <small>View Match Stats</small></PageHeader>
           </header>
 
+          {this.renderMatchStatsContainer()}
           {this.renderMatchTable()}
+
 
         </div>
     );
