@@ -7,6 +7,44 @@ import {} from 'meteor/meteorhacks:aggregate';
 export const Stats = new Mongo.Collection('playerStats')
 export const MatchStats = new Mongo.Collection('matchStat')
 
+const callService = (type, url, options) => new Promise((resolve, reject) => {
+  HTTP.call(type, url, options, (error, result) => {
+    if (error) {
+      reject(error);
+    } else {
+      resolve(result);
+    }
+  });
+});
+//build all the data here then make another and apend the other with diff field
+const playerDataOne = (playerData) => new Promise((resolve, reject) => {
+  console.log("In playerDataOne trying to run");
+
+  HTTP.call('GET', playerData.pOneURL, {headers: {"User-Agent": "SpotlightShowdown@gmail.com"}} , (error, result) => {
+    if (error) {
+      reject(error);
+    } else {
+      playerData.pOneData = result;
+      resolve(playerData);
+    }
+  });
+});
+
+const playerDataTwo =  (playerData, options) => new Promise ((resolve,reject) => {
+  HTTP.call("GET", playerData.pTwoURL,{headers: {"User-Agent": "SpotlightShowdown@gmail.com"}}, (error, result) => {
+    if (error) {
+      reject(error);
+    } else {
+      playerData.pTwoData = result;
+      resolve(playerData);
+    }
+  });
+
+})
+// const playerData = (playerName, url) => new Promise((resolve, reject) => {
+//
+//
+// });
 
 if (Meteor.isServer){
 
@@ -80,6 +118,7 @@ if (Meteor.isServer){
 
         //http://stackoverflow.com/questions/24153476/group-by-condition-in-mongodb
         //this is the link which we need to have for the aggregation
+
         let overallMatchData = MatchStats.aggregate({
               $group: {
                   _id: '$matchDetails.mapName',
@@ -89,6 +128,16 @@ if (Meteor.isServer){
                   Total: {$sum: 1}
               }
         });
+
+        /*let overallMatchData = MatchStats.aggregate({
+              $group: {
+                  _id: '$matchDetails.mapName',
+                  wins: {
+                    $cond: { if: { $eq: ['$matchDetails.result', "Win"]}, then: {$sum:1}}
+                  },
+                  Total: {$sum: 1}
+              }
+        });*/
 
         /*
         let overallMatchData = MatchStats.aggregate({
@@ -108,7 +157,81 @@ if (Meteor.isServer){
         return overallMatchData;
 
 
+      },
+      requestPlayerStatistics(playerOne, playerTwo){
+          platform = "";
+          region ="";
+          mode ="";
+
+
+         playerOne = playerOne.replace("#","-");
+         playerTwo = playerTwo.replace("#","-");
+         console.log("playerTwo: " + playerTwo);
+         console.log("playerOne: " + playerOne);
+
+         //This API is currently not working
+         //https://api.lootbox.eu/patch_notes
+         //https://api.lootbox.eu/pc/us/Camlani-1682/quick-play/hero/Torbjoern%2CLucio%2CSoldier76/
+
+         //This is the API we will be using
+         //https://github.com/SunDwarf/OWAPI/blob/master/api.md
+
+         //Request for single player stats
+         //https://owapi.net/api/v2/u/SunDwarf-21353/heroes/reinhardt/competitive
+         //let buildUrl ="https://owapi.net/api/v2/u/"+playerName+"/heroes/reinhardt/competitive?region=us";
+
+
+         //Time per hero https://owapi.net/api/v3/u/Camlani-1682/heroes
+         //Just Need this then iterate https://owapi.net/api/v3/u/Camlani-1682/blob
+
+        //  let buildUrlOne ="https://owapi.net/api/v2/u/"+playerOne+"/stats/general?region=us";
+        //  let buildUrlTwo ="https://owapi.net/api/v2/u/"+playerTwo+"/stats/general?region=us";
+         let buildUrlOne ="https://owapi.net/api/v3/u/"+playerOne+"/blob";
+         let buildUrlTwo ="https://owapi.net/api/v3/u/"+playerTwo+"/blob";
+
+         //playerDataOne then playerDataTwo
+         let playerData ={
+           pOneName: playerOne,
+           pOneURL: buildUrlOne,
+           pOneData: "",
+           pTwoName: playerTwo,
+           pTwoURL:buildUrlTwo,
+           pTwoData: ""
+         }
+
+        //  return playerDataOne(playerData).then(playerDataTwo).then((result) => result).catch((error) => {
+        //    throw new Meteor.Error('500', `${error.message}`);
+        //});
+
+        return playerDataOne(playerData).then(
+          function(result){
+
+            return result;
+          }
+        ).then(playerDataTwo)
+          .catch( function(result){
+            return result;
+
+        });
+
+        // return playerDataOne(playerData).then(
+        //   function(result){
+        //     return result;
+        //   }
+        // ).catch((error) => {
+        //        throw new Meteor.Error('500', `${error.message}`);
+        // });
+        //  return callService(
+        //        'GET',
+        //        buildUrl
+        //      ).then((result) => result)
+        //      .then ()
+        //      .catch((error) => {
+        //        throw new Meteor.Error('500', `${error.message}`);
+        //      });
+         //return true;
       }
+
 
 
     })
@@ -142,52 +265,7 @@ Meteor.methods({
              }
            );
 
-   },
-   requestPlayerStatistics(playerName, platform, region, mode){
-      console.log("PlayerName: " + playerName);
-      playerName = playerName.replace("#","-");
-      console.log("PlayerName: " + playerName);
-
-      //need to take all of these values then set them to 0, from
-      //there need to build this string then return the objects to the client
-      //or take another value and from there pass
-      //need to pass in the metric to split on either the client or the db
-      //maybe have all of these text boxes which will help us select what region
-      //they are in
-      //maybe store in the db too, all this data maybe too much
-
-      //This API is currently not working
-      //https://api.lootbox.eu/patch_notes
-      //https://api.lootbox.eu/pc/us/Camlani-1682/quick-play/hero/Torbjoern%2CLucio%2CSoldier76/
-
-      //This is the API we will be using
-      //https://github.com/SunDwarf/OWAPI/blob/master/api.md
-
-      //Request for single player stats
-      //https://owapi.net/api/v2/u/SunDwarf-21353/heroes/reinhardt/competitive
-
-
-      let buildUrl ="https://owapi.net/api/v2/u/"+playerName+"/stats/general?region=us";
-      //let buildUrl ="https://owapi.net/api/v2/u/"+playerName+"/heroes/reinhardt/competitive?region=us";
-
-      console.log(buildUrl);
-
-      HTTP.get(buildUrl, {}, function(error, response){
-        if (error){
-          console.log(error);
-        }
-        if (response) {
-          console.log(response);
-          Stats.insert({
-            result: response
-          });
-
-        }
-      });
-
-      return true;
    }
-
 
 
 

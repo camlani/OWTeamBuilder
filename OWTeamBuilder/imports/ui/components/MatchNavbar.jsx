@@ -36,6 +36,9 @@ class MatchNavbar extends Component {
                 <NavItem eventKey={2} >Match Stats</NavItem>
               </LinkContainer>
               <NavItem eventKey={3} >Team Builder</NavItem>
+              <LinkContainer to= {{ pathname: '/Showdown' }} >
+                <NavItem eventKey={4} >Showdown</NavItem>
+              </LinkContainer>
               <NavItem eventKey={2} >{<AccountsUIWrapper />}</NavItem>
             </Nav>
           </Navbar.Collapse>
