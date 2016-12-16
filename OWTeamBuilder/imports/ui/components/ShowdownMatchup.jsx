@@ -9,13 +9,16 @@ import AccountsUIWrapper from './AccountsUIWrapper.jsx'
 import MatchNavbar from './MatchNavbar.jsx'
 import MatchStatsContainer from './MatchStatsContainer.jsx'
 
+
+import ShowdownStatComp from './ShowdownStatComp.jsx'
+
 class ShowdownMatchup extends Component {
   constructor(props) {
     super(props);
     this.state = {
       playerOne: "" ,
       playerTwo: "",
-      playerData: ""
+      playerData: null
     };
   }
 
@@ -34,6 +37,8 @@ class ShowdownMatchup extends Component {
     console.log("Submiting");
     console.log(this.state);
 
+    var callback = this;
+
     Meteor.call('requestPlayerStatistics',this.state.playerOne, this.state.playerTwo, function(error, result){
       if(error){
         console.log(error);
@@ -45,9 +50,9 @@ class ShowdownMatchup extends Component {
         //need to build both player one and players two return data in the method
         console.log(result);
 
-        this.setState({playerData: result});
-        //now need to store this in the stats then generate the little components
+        callback.setState({playerData: result});
 
+        //now need to store this in the stats then generate the little components
         //need to parse the data. put it into tuples for characters, time.
         // then that data add it up and place it in the app
 
@@ -57,12 +62,48 @@ class ShowdownMatchup extends Component {
 
   }
   renderStatMatchUp(){
+
+    let statMatchUp = {
+      playerOne: "camlani-1682" ,
+      playerTwo: "coppertop101-1203",
+      playerData: [
+        {
+         title: "Wins",
+         pOne: 75,
+         pTwo: 80
+       },
+       {
+         title: "Kill Death",
+         pOne: 54,
+         pTwo: 56
+       },
+       {
+           title: "Zarya Time Played",
+           pOne: 54,
+           pTwo: 34
+         },
+         {
+           title: "Junkrat Time Played",
+           pOne: 23,
+           pTwo:90
+         }
+      ]
+
+      };
+    //need to fix this
+    //return <ShowdownStatComp playerOne ={statMatchUp.playerOne} playerTwo={statMatchUp.playerTwo}  statData={statMatchUp} />
+
+    return statMatchUp.playerData.map((data) => (
+      <ShowdownStatComp key={data.title} playerOne ={statMatchUp.playerOne} playerTwo={statMatchUp.playerTwo}  statData={data} />
+    ));
+
+    //need to have this set up to take the data in and loop through it.
+
     //here I need to take the sum of the progress bar from there split into two different
     //colors and use those for stats
 
     //need to get the correct stats cut out what we dont need then maybe fire it up
     //into arrays lets do that
-
 
   }
   render() {
@@ -92,10 +133,10 @@ class ShowdownMatchup extends Component {
             </Row>
             <Row>
               <div className="col-md-9 col-md-offset-5"> <Button type="submit" bsStyle="success">Show Stats</Button></div>
-
-
             </Row>
           </Form>
+          {this.renderStatMatchUp()}
+
         </div>
 
 
