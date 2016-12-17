@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import {ControlLabel, Form, FormControl, FormGroup, Table, Grid, Row, Button, PageHeader, Col, ProgressBar } from 'react-bootstrap';
+import {ControlLabel, Form, FormControl, FormGroup, Table, Grid, Row, Button, PageHeader, Col, ProgressBar,Glyphicon, Label } from 'react-bootstrap';
 import { createContainer } from 'meteor/react-meteor-data';
 import { Meteor } from 'meteor/meteor';
 
@@ -12,11 +12,99 @@ class ShowdownStatComp extends Component {
 
   };
 
+  renderAmountForStatOne(){
+    let val = 0;
+    val = this.props.statData.pOne/(this.props.statData.pOne + this.props.statData.pTwo);
+
+    return val * 100;
+  }
+
+  renderAmountForStatTwo(){
+    let val = 0;
+      val = this.props.statData.pTwo/(this.props.statData.pOne + this.props.statData.pTwo);
+
+    return val * 100;
+  }
+
+  renderResultpOne(){
+
+    if(this.props.statData.pOne > this.props.statData.pTwo) {
+      return(
+        <Glyphicon glyph="ok"/>
+      )
+    }
+
+  }
+  renderResultpTwo(){
+
+    if(this.props.statData.pOne < this.props.statData.pTwo) {
+      return(
+        <Glyphicon glyph="ok"/>
+      )
+    }
+  }
+
+  renderPlayerOneSpread(){
+    let result = this.props.statData.pOne - this.props.statData.pTwo;
+    result = Math.round( result * 10) / 10;
+    //console.log(result);
+    if(result > 0) {
+
+      return (
+        <h4><Label bsStyle="success">+{result}</Label></h4>
+      )
+
+    } else {
+
+      return (
+        <h4><Label bsStyle="danger">{result}</Label></h4>
+      )
+
+    }
+
+  }
+
+  renderPlayerTwoSpread(){
+    let result = this.props.statData.pTwo - this.props.statData.pOne;
+    result = Math.round( result * 10) / 10;
+    //console.log(result);
+    if(result > 0) {
+      return (
+        <h4><Label bsStyle="success">+{result}</Label></h4>
+      )
+
+    } else {
+      return (
+        <h4><Label bsStyle="danger">{result}</Label></h4>
+      )
+
+    }
+
+
+  }
+
 //need to add the calculation of the bar
   render(){
     console.log(this.props.statData);
     return(
 
+
+      <tr>
+        <td>{this.props.statData.title}</td>
+        <td>{this.renderPlayerOneSpread()}</td>
+        <td>
+            <ProgressBar>
+              <ProgressBar  bsStyle="warning" now={this.renderAmountForStatOne()} key={1}/>
+              <ProgressBar  bsStyle="success" now={this.renderAmountForStatTwo()} key={2}/>
+            </ProgressBar>
+        </td>
+
+        <td>{this.renderPlayerTwoSpread()}</td>
+        <td>{this.renderResultpOne()}</td>
+        <td>{this.renderResultpTwo()}</td>
+      </tr>
+
+      /*
       <div>
         <Row>
           <div className="col-md-9 col-md-offset-5"> {this.props.statData.title}</div>
@@ -27,8 +115,8 @@ class ShowdownStatComp extends Component {
           </Col>
           <Col md={4}>
           <ProgressBar>
-            <ProgressBar  bsStyle="warning" now={this.props.statData.pOne} key={1}/>
-            <ProgressBar  bsStyle="success" now={20} key={2}/>
+            <ProgressBar  bsStyle="warning" now={this.renderAmountForStatOne()} key={1}/>
+            <ProgressBar  bsStyle="success" now={this.renderAmountForStatTwo()} key={2}/>
           </ProgressBar>
           </Col>
           <Col md={4}>
@@ -37,7 +125,7 @@ class ShowdownStatComp extends Component {
 
         </Row>
       </div>
-
+      */
     );
   }
 }
