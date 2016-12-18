@@ -232,6 +232,32 @@ class ShowdownMatchup extends Component {
     //into arrays lets do that
 
   }
+  renderPlayersRanks(){
+    if(this.state.playerData !== null && this.state.playerData !== undefined){
+      return(
+        <Table striped bordered condensed hover>
+          <thead>
+            <tr>
+            <th>Player Name</th>
+            <th>Season 3 Rank</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{this.state.playerData.pOneName}</td>
+              <td>{this.state.playerData.pOneData.data.us.stats.competitive.overall_stats.comprank}</td>
+            </tr>
+            <tr>
+              <td>{this.state.playerData.pTwoName}</td>
+              <td>{this.state.playerData.pTwoData.data.us.stats.competitive.overall_stats.comprank}</td>
+            </tr>
+          </tbody>
+        </Table>
+
+      )
+
+    }
+  }
   render() {
     return (
 
@@ -262,9 +288,10 @@ class ShowdownMatchup extends Component {
             </Row>
             <div>&nbsp;</div>
           </Form>
-          <h4>Quick Stats</h4>
+
           <Row>
             <Col md={6}>
+            <h4>Quick Stats</h4>
               <Table striped bordered condensed hover>
                 <thead>
                   <tr>
@@ -282,6 +309,8 @@ class ShowdownMatchup extends Component {
               </Table>
             </Col>
             <Col md={6}>
+            <h4>Competitive Rank</h4>
+            {this.renderPlayersRanks()}
             </Col>
           </Row>
 

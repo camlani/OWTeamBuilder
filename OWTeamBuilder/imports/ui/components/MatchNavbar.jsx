@@ -23,23 +23,24 @@ class MatchNavbar extends Component {
       <Navbar fixedTop>
           <Navbar.Header>
             <Navbar.Brand>
-              <a href="#">OWTracker</a>
+              <a href="#">SpotlightShowdown</a>
             </Navbar.Brand>
             <Navbar.Toggle />
           </Navbar.Header>
           <Navbar.Collapse>
             <Nav>
-              <IndexLinkContainer to={{ pathname: '/'}}  >
+            {/* Commented out for the stream */}
+              {/* <IndexLinkContainer to={{ pathname: '/'}}  >
                 <NavItem eventKey={1} >Home</NavItem>
               </IndexLinkContainer>
               <LinkContainer to= {{ pathname: '/MatchStats' }} >
                 <NavItem eventKey={2} >Match Stats</NavItem>
-              </LinkContainer>
-              <NavItem eventKey={3} >Team Builder</NavItem>
+              </LinkContainer> */}
+              {/* <NavItem eventKey={3} >Team Builder</NavItem> */}
               <LinkContainer to= {{ pathname: '/Showdown' }} >
                 <NavItem eventKey={4} >Showdown</NavItem>
               </LinkContainer>
-              <NavItem eventKey={2} >{<AccountsUIWrapper />}</NavItem>
+              {/* <NavItem eventKey={2} >{<AccountsUIWrapper />}</NavItem> */}
             </Nav>
           </Navbar.Collapse>
         </Navbar>

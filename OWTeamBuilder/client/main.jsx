@@ -13,7 +13,7 @@ Meteor.startup(() => {
   render(
     <Router history={browserHistory}>
       <Route path="/" component={MainApp}>
-        <IndexRoute component={MatchTracker}/>
+        <IndexRoute component={MatchTracker}/> 
         <Route path="/MatchStats" component={MatchHistory}/>
         <Route path="/Showdown" component={ShowdownMatchup}/>
       </Route>
