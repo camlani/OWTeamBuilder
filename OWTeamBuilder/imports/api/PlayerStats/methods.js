@@ -158,11 +158,53 @@ if (Meteor.isServer){
 
 
       },
+      requestPlayerOneStatistics(playerOne){
+          platform = "";
+          region ="";
+          mode ="";
+          playerOne = playerOne.replace("#","-");
+          let buildUrlOne ="https://owapi.net/api/v3/u/"+playerOne+"/blob";
+          let playerData ={
+            pOneName: playerOne,
+            pOneURL: buildUrlOne,
+            pOneData: "",
+            pTwoName: playerTwo,
+            pTwoURL:buildUrlTwo,
+            pTwoData: ""
+          }
+          return playerDataOne(playerData).then(
+            function(result){
+
+              return result;
+            }
+          )
+
+      },
+      requestPlayerTwoStatistics(playerTwo){
+          platform = "";
+          region ="";
+          mode ="";
+          playerTwo = playerTwo.replace("#","-");
+          let buildUrlTwo ="https://owapi.net/api/v3/u/"+playerTwo+"/blob";
+          let playerData ={
+            pOneName: playerOne,
+            pOneURL: buildUrlOne,
+            pOneData: "",
+            pTwoName: playerTwo,
+            pTwoURL:buildUrlTwo,
+            pTwoData: ""
+          }
+          return playerDataTwo(playerData).then(
+            function(result){
+
+              return result;
+            }
+          )
+      },
       requestPlayerStatistics(playerOne, playerTwo){
           platform = "";
           region ="";
           mode ="";
-
 
          playerOne = playerOne.replace("#","-");
          playerTwo = playerTwo.replace("#","-");
@@ -203,16 +245,19 @@ if (Meteor.isServer){
         //    throw new Meteor.Error('500', `${error.message}`);
         //});
 
-        return playerDataOne(playerData).then(
-          function(result){
 
-            return result;
-          }
-        ).then(playerDataTwo)
-          .catch( function(result){
-            return result;
 
-        });
+
+            return playerDataOne(playerData).then(
+              function(result){
+
+                return result;
+              }
+            ).then(playerDataTwo)
+              .catch( function(result){
+                return result;
+
+            });
 
         // return playerDataOne(playerData).then(
         //   function(result){

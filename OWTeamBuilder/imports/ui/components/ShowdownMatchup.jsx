@@ -39,6 +39,11 @@ class ShowdownMatchup extends Component {
 
     var callback = this;
 
+    //right here may need to make a call
+    //have an if statament that checks if playerOne name is equal to this.state.playerData.pOneName
+    //if either one is the same then do not send.
+    //need to run this check and if statement for the three chack on the names
+
     Meteor.call('requestPlayerStatistics',this.state.playerOne, this.state.playerTwo, function(error, result){
       if(error){
         console.log(error);
