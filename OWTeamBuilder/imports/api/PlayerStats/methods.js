@@ -167,10 +167,7 @@ if (Meteor.isServer){
           let playerData ={
             pOneName: playerOne,
             pOneURL: buildUrlOne,
-            pOneData: "",
-            pTwoName: playerTwo,
-            pTwoURL:buildUrlTwo,
-            pTwoData: ""
+            pOneData: ""
           }
           return playerDataOne(playerData).then(
             function(result){
@@ -187,9 +184,6 @@ if (Meteor.isServer){
           playerTwo = playerTwo.replace("#","-");
           let buildUrlTwo ="https://owapi.net/api/v3/u/"+playerTwo+"/blob";
           let playerData ={
-            pOneName: playerOne,
-            pOneURL: buildUrlOne,
-            pOneData: "",
             pTwoName: playerTwo,
             pTwoURL:buildUrlTwo,
             pTwoData: ""

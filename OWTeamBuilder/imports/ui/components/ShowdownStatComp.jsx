@@ -85,7 +85,7 @@ class ShowdownStatComp extends Component {
 
 //need to add the calculation of the bar
   render(){
-    console.log(this.props.statData);
+    //console.log(this.props.statData);
     return(
 
 

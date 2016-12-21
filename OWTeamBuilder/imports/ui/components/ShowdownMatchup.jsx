@@ -43,27 +43,94 @@ class ShowdownMatchup extends Component {
     //have an if statament that checks if playerOne name is equal to this.state.playerData.pOneName
     //if either one is the same then do not send.
     //need to run this check and if statement for the three chack on the names
+    let playerOneName = this.state.playerOne.replace("#","-");
+    let playerTwoName = this.state.playerTwo.replace("#","-");
 
-    Meteor.call('requestPlayerStatistics',this.state.playerOne, this.state.playerTwo, function(error, result){
-      if(error){
-        console.log(error);
-        console.log("ERROR in call back");
+    if(this.state.playerData !== null && this.state.playerData !== undefined && playerTwoName == this.state.playerData.pTwoName){
+      console.log("P two same");
+      console.log(this.state.playerData);
+      let oldplayerData = this.state.playerData;
+      let thisObj = this;
+      Meteor.call('requestPlayerOneStatistics',this.state.playerOne, function(error, result){
+        if(error){
+          console.log(error);
+          console.log("ERROR in call back");
 
-      } else {
-        //need to set the state right here
-        console.log("The stat is");
-        //need to build both player one and players two return data in the method
-        console.log(result);
+        } else {
+          //need to set the state right here
+          console.log("The stat is");
+          //need to build both player one and players two return data in the method
+          console.log(result);
 
-        callback.setState({playerData: result});
+          callback.setState({playerData:
+            {
+            pOneData: result.pOneData,
+            pOneName: result.pOneName,
+            pTwoName: oldplayerData.pTwoName,
+            pTwoData: oldplayerData.pTwoData
+            }
+          });
+          console.log("Player data from p2 same");
+          console.log(thisObj.state.playerData);
+        }
+      });
+      console.log("Player data from p2 same");
+      console.log(this.state.playerData);
+    } else if (this.state.playerData !== null && this.state.playerData !== undefined && playerOneName == this.state.playerData.pOneName) {
+      console.log("P one same");
+      console.log(this.state.playerData);
+      let oldplayerData = this.state.playerData;
+      let thisObj = this;
+      Meteor.call('requestPlayerTwoStatistics',this.state.playerTwo, function(error, result){
+        if(error){
+          console.log(error);
+          console.log("ERROR in call back");
 
-        //now need to store this in the stats then generate the little components
-        //need to parse the data. put it into tuples for characters, time.
-        // then that data add it up and place it in the app
+        } else {
+          //need to set the state right here
+          console.log("The stat is");
+          //need to build both player one and players two return data in the method
+          console.log(result);
 
-      }
+          callback.setState({playerData:
+            {
+            pOneData: oldplayerData.pOneData,
+            pOneName: oldplayerData.pOneName,
+            pTwoName: result.pTwoName,
+            pTwoData: result.pTwoData
+            }
+          });
+          console.log("Player data from p1 same");
+          console.log(thisObj.state.playerData);
+        }
+      });
 
-    });
+    } else {
+      console.log("Two Diff");
+      Meteor.call('requestPlayerStatistics',this.state.playerOne, this.state.playerTwo, function(error, result){
+        if(error){
+          console.log(error);
+          console.log("ERROR in call back");
+
+        } else {
+          //need to set the state right here
+          console.log("The stat is");
+          //need to build both player one and players two return data in the method
+          console.log(result);
+
+          callback.setState({playerData: result});
+
+          //now need to store this in the stats then generate the little components
+          //need to parse the data. put it into tuples for characters, time.
+          // then that data add it up and place it in the app
+
+        }
+
+      });
+    }
+
+  console.log("At the end Stat val");
+  console.log(this.state.playerData);
 
   }
   renderQuickStats(){
@@ -98,6 +165,7 @@ class ShowdownMatchup extends Component {
 
   }
   renderStatMatchUp(){
+
 
     if(this.state.playerData !== null && this.state.playerData !== undefined){
 
@@ -238,6 +306,8 @@ class ShowdownMatchup extends Component {
 
   }
   renderPlayersRanks(){
+    console.log("PlayerRank MEthod object");
+    console.log(this.state.playerData);
     if(this.state.playerData !== null && this.state.playerData !== undefined){
       return(
         <Table striped bordered condensed hover>
