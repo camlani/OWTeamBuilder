@@ -3,9 +3,11 @@ import { check } from 'meteor/check';
 import { Mongo } from 'meteor/mongo';
 import { HTTP } from 'meteor/http';
 import {} from 'meteor/meteorhacks:aggregate';
+import {fs} from 'fs';
 
 export const Stats = new Mongo.Collection('playerStats')
 export const MatchStats = new Mongo.Collection('matchStat')
+export const ShowdownQueue = new Mongo.Collection('showdownQueue')
 
 const callService = (type, url, options) => new Promise((resolve, reject) => {
   HTTP.call(type, url, options, (error, result) => {
@@ -52,6 +54,12 @@ if (Meteor.isServer){
       //need to do a check if createdBy is the person,
       //may need to check on the verify id as well.
       return MatchStats.find({});
+    });
+
+    Meteor.publish('showdownQueue', function showdownQueuePublication() {
+      //need to do a check if createdBy is the person,
+      //may need to check on the verify id as well.
+      return ShowdownQueue.find({});
     });
 
     //need to add createdBy
@@ -269,13 +277,40 @@ if (Meteor.isServer){
         //        throw new Meteor.Error('500', `${error.message}`);
         //      });
          //return true;
+      },
+
+      //print ShowdownQueue to the server
+      'writeShowdownQueueToFile'(){
+        let filepath ="C:/Users/Cameron/Google Drive/OWDuels/Stream Assets/ShowdownApp/QueueFile.txt";
+        console.log("Writing to here " + filepath);
+        var fs = require("fs");
+        var path = filepath;
+        // var data = "Hello from the Node writeFile method!";
+        //need to loop through the
+        var showdownVal = ShowdownQueue.find({}, {sort : {createdAt : 1} } ).fetch();
+
+        var data = "";
+        //data = queueObj.playerDetails.twitchUsername + ", ";
+        var count = 1;
+        showdownVal.map(function(obj){
+          data += count + ". " + obj.playerDetails.twitchUsername + ", ";
+          count++;
+        });
+
+
+
+        fs.writeFile(path, data, function(error) {
+             if (error) {
+               console.error("write error:  " + error.message);
+             } else {
+               console.log("Successful Write to " + path);
+             }
+        });
+
       }
 
 
-
     })
-
-
 }
 
 Meteor.methods({
@@ -303,7 +338,26 @@ Meteor.methods({
                {matchDetails: matchDetails}
              }
            );
-
+   },
+   'showdownQueue.insert'(playerDetails){
+      console.log();
+      ShowdownQueue.insert({
+        playerDetails,
+        createdAt: new Date(),
+        createdBy: Meteor.userId()
+      });
+   },
+   'showdownQueue.remove'(showdownQueueID){
+          //remove the matchId
+          ShowdownQueue.remove(showdownQueueID);
+   },
+   'showdownQueue.update'(showdownQueueID, playerDetails){
+          //check(matchID, String);
+          ShowdownQueue.update(showdownQueueID,
+             {$set:
+               {playerDetails: playerDetails}
+             }
+           );
    }
 
 
